@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Todo App</title>
+  </head>
+  <body>
+    <div id="app" class="app">
+      <header class="header">
+        <div class="header__wrapper">
+          <h2 class="title">Darg&Drop Todo</h2>
+        </div>
+
+        <form class="addTodo">
+          <h3 class="addTodo__title">Add new todo</h3>
+          <label for="title" class="addTodo__title_label">
+            Title
+            <input id="title" type="text" placeholder="todo title" />
+          </label>
+          <label for="description" class="addTodo__description_label">
+            Description
+            <input id="description" class="description" type="text" placeholder="todo description"/>
+          </label>
+          <button type="submit" class="submit">Submit</button>
+        </form>
+
+      </header>
+      <main class="main">
+        <div class="main__wrapper">
+          <div class="desc desc1">
+            <h3 class="desc__title">Should To Do</h3>
+            <div class="todos">
+              <div class="todo">
+                <div class="todo__title">
+                  <h4 class="todo__title-text">Todo Title</h4>
+                  <span class="todo__title-created"><b>Created:</b> 4 March 2020 12:45</span>
+                  <hr />
+                </div>
+                <p class="todo__description">Todo description</p>
+                <div class="todo__status">
+                  <button class="todo__status_btn todo__status_btn-prev">Prev</button>
+                  <span class="todo__status-text">Change status</span>
+                  <button class="todo__status_btn todo__status_btn-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="desc desc2">
+            <h3 class="desc__title">In process</h3>
+          </div>
+          <div class="desc desc3">
+            <h3 class="desc__title">Done</h3>
+          </div>
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="footer__wrapper">
+          <p>Powered by steroids:)</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

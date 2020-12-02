@@ -1,2 +1,3 @@
-// Your code
-console.log('Hello index.ts')
+import AddForm from './components/AddForm';
+
+const addForm = new AddForm();
