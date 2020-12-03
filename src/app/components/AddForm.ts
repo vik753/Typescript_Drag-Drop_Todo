@@ -1,3 +1,6 @@
+import { state, STATUS, TODO } from '../state/State';
+import { v4 as uuidv4 } from 'uuid';
+
 export default class AddForm {
   headerEl: HTMLElement;
   private static addFormEl: HTMLFormElement;
@@ -30,8 +33,19 @@ export default class AddForm {
       alert('Your input is invalid! Please try again.');
       return;
     }
-    // Todo - create new Todo and save
+    // Create new todos and save
+    const newTodo: TODO = {
+      id: uuidv4(),
+      created: new Date(),
+      title,
+      description,
+      status: STATUS.created,
+    };
 
+    state.setTodo(newTodo);
+    AddForm.titleInputEl.value = '';
+    AddForm.descriptionInputEl.value = '';
+    console.log('State after update: ', state.getTodos())
   }
 
   static validate<T extends { value: string; min?: number; max?: number }>(obj: T): boolean {
