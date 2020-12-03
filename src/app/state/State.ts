@@ -1,3 +1,5 @@
+import {CreatedData} from '../helpers/helpers';
+
 enum STATUS {
   created,
   inProcess,
@@ -8,7 +10,7 @@ interface TODO {
   id: string;
   title: string;
   description: string;
-  created: number | Date;
+  created: CreatedData;
   status: STATUS;
 }
 

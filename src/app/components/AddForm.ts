@@ -1,5 +1,6 @@
 import { state, STATUS, TODO } from '../state/State';
 import { v4 as uuidv4 } from 'uuid';
+import { setCreatedData, CreatedData } from '../helpers/helpers';
 
 export default class AddForm {
   headerEl: HTMLElement;
@@ -36,7 +37,7 @@ export default class AddForm {
     // Create new todos and save
     const newTodo: TODO = {
       id: uuidv4(),
-      created: new Date(),
+      created: setCreatedData(new Date()),
       title,
       description,
       status: STATUS.created,
@@ -45,7 +46,7 @@ export default class AddForm {
     state.setTodo(newTodo);
     AddForm.titleInputEl.value = '';
     AddForm.descriptionInputEl.value = '';
-    console.log('State after update: ', state.getTodos())
+    console.log('State after update: ', state.getTodos());
   }
 
   static validate<T extends { value: string; min?: number; max?: number }>(obj: T): boolean {
