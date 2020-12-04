@@ -7,6 +7,7 @@ enum DayOfWeek {
   Friday,
   Saturday,
 }
+
 enum Months {
   January,
   February,
@@ -24,6 +25,7 @@ enum Months {
 
 interface CreatedData {
   rawDate: Date;
+  localString: string;
   day: number;
   dayOfWeek: string;
   month: string;
@@ -36,6 +38,7 @@ function setCreatedData(tergetData: Date): CreatedData {
   const myDate = new Date(tergetData);
   return {
     rawDate: myDate,
+    localString: myDate.toLocaleString(),
     day: myDate.getDate(),
     dayOfWeek: DayOfWeek[myDate.getDay()],
     month: Months[myDate.getMonth()],

@@ -19,7 +19,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #d67433;
+    background: #6fa3af;
 
     .title {
       color: #fff;
@@ -30,6 +30,11 @@ body {
   .addTodo {
     padding: 1rem 1rem 0;
     background: #efefef;
+
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+    }
 
     .addTodo__title {
       padding: 0 0 0.5rem;
@@ -43,6 +48,12 @@ body {
 
     .description {
       width: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .description {
+        width: auto;
+      }
     }
 
     .submit {
@@ -147,6 +158,10 @@ body {
               background: #333;
               color: #fff;
             }
+
+            &:disabled {
+              opacity: 0.6;
+            }
           }
 
           .todo__status_btn-prev {
@@ -158,8 +173,18 @@ body {
             background: #93cb7d;
             color: #fff;
           }
+
+          .todo__status-text {
+            padding: 0 0.5rem;
+          }
         }
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .main__wrapper {
+      flex-direction: column;
     }
   }
 }

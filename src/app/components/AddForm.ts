@@ -1,12 +1,13 @@
 import { state, STATUS, TODO } from '../state/State';
 import { v4 as uuidv4 } from 'uuid';
-import { setCreatedData, CreatedData } from '../helpers/helpers';
+import { setCreatedData } from '../helpers/helpers';
 
 export default class AddForm {
   headerEl: HTMLElement;
   private static addFormEl: HTMLFormElement;
   private static titleInputEl: HTMLInputElement;
   private static descriptionInputEl: HTMLInputElement;
+
   constructor() {
     this.headerEl = document.getElementById('header')! as HTMLElement;
     this.headerEl.insertAdjacentHTML('beforeend', AddForm.render());

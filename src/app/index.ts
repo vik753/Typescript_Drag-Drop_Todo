@@ -1,9 +1,7 @@
 import AddForm from './components/AddForm';
-import Desks from './components/Desk';
+import Desk from './components/Desk';
+import { state } from './state/State';
 
 const addForm = new AddForm();
-const desks = new Desks();
-
-
-
-
+const desks = Desk.getInstance();
+state.desks = desks;
