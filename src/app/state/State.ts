@@ -1,6 +1,6 @@
-import {CreatedData} from '../helpers/helpers';
+import { CreatedData, Desks } from '../helpers/helpers';
 import Desk from '../components/Desk';
-import {To_Do} from '../components/To_Do';
+import { To_Do } from '../components/To_Do';
 
 enum STATUS {
   created,
@@ -20,9 +20,10 @@ class State {
   private static todosState: Array<TODO> = [];
   private static listeners: Array<Function> = [];
   private static instance: State;
-  public desks: null | Desk = null;
+  public desks: Array<Desk> = [];
 
   private constructor() {
+    State.appealToLocalStorage();
     this.configure();
   }
 
@@ -35,43 +36,64 @@ class State {
 
   private configure() {
     this.setListener((todos: Array<TODO>) => {
-      todos.forEach(todo => {
+      todos.forEach((todo) => {
         new To_Do(todo);
-      })
+      });
     });
   }
 
-  static restartListeners() {
-    this.listeners.forEach((listener) => listener(State.todosState));
-    console.log('restartListeners', this.todosState)
+  private static appealToLocalStorage(todos?: Array<TODO>) {
+    let savedTodos: Array<TODO>;
+    if (todos) {
+      localStorage.setItem('todos', JSON.stringify(todos));
+      return;
+    }
+
+    const rawTodos = localStorage.getItem('todos');
+    if (rawTodos && rawTodos !== 'null') {
+      savedTodos = JSON.parse(rawTodos);
+      State.todosState = savedTodos;
+    }
+  }
+
+  restartListeners() {
+    State.listeners.forEach((listener) => {
+      listener(State.todosState);
+    });
   }
 
   setListener(listener: Function) {
     State.listeners = [...State.listeners, listener];
-    console.log('setListener', State.todosState)
+  }
+
+  clearDesc() {
+    this.desks?.forEach((d) => {
+      const deskWrapperEl = d.desk.querySelector(`[id^=todos-]`)!;
+      deskWrapperEl.innerHTML = '';
+    });
   }
 
   setTodo(todoObj: TODO) {
-    this.desks && this.desks.clearDescs();
+    this.desks && this.clearDesc();
     State.todosState = [...State.todosState, todoObj];
-    State.restartListeners();
-    console.log('setTodo', State.todosState)
+    this.restartListeners();
+    State.appealToLocalStorage(State.todosState);
   }
 
   updateTodo(todo: TODO) {
     let prevState = [...State.todosState];
-    prevState = prevState.filter(targetTodo => targetTodo.id !== todo.id);
+    prevState = prevState.filter((targetTodo) => targetTodo.id !== todo.id);
     State.todosState = [...prevState, todo];
-    this.desks?.clearDescs();
-    State.restartListeners();
-    console.log('updateTodo', State.todosState)
+    this.desks && this.clearDesc();
+    State.appealToLocalStorage(State.todosState);
+    this.restartListeners();
   }
 
   removeTodo(id: string) {
-    this.desks && this.desks.clearDescs();
+    this.desks && this.clearDesc();
     const currentState = State.todosState;
     State.todosState = currentState.filter((todo) => todo.id !== id);
-    console.log('removeTodo', State.todosState)
+    State.appealToLocalStorage(State.todosState);
   }
 
   getTodos(): Array<TODO> {

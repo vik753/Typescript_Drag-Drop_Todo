@@ -1,3 +1,9 @@
+enum Desks {
+  'Created',
+  'To Do',
+  'Done',
+}
+
 enum DayOfWeek {
   Sunday,
   Monday,
@@ -24,7 +30,7 @@ enum Months {
 }
 
 interface CreatedData {
-  rawDate: Date;
+  rawDate: number;
   localString: string;
   day: number;
   dayOfWeek: string;
@@ -34,10 +40,10 @@ interface CreatedData {
   minutes: number;
 }
 
-function setCreatedData(tergetData: Date): CreatedData {
+function setCreatedData(tergetData: number): CreatedData {
   const myDate = new Date(tergetData);
   return {
-    rawDate: myDate,
+    rawDate: tergetData,
     localString: myDate.toLocaleString(),
     day: myDate.getDate(),
     dayOfWeek: DayOfWeek[myDate.getDay()],
@@ -48,4 +54,4 @@ function setCreatedData(tergetData: Date): CreatedData {
   };
 }
 
-export { setCreatedData, CreatedData, Months, DayOfWeek };
+export { setCreatedData, CreatedData, Months, DayOfWeek, Desks };

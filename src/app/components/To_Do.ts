@@ -2,13 +2,16 @@ import { state, STATUS, TODO } from '../state/State';
 
 class To_Do {
   public todo: TODO;
-  static parent: HTMLElement;
+  public element: HTMLElement;
+  public parent: HTMLElement;
   public btnPrev: HTMLButtonElement;
   public btnNext: HTMLButtonElement;
+
   constructor(todo: TODO) {
     this.todo = todo;
-    To_Do.parent = document.getElementById(`todos-${STATUS[todo.status]}`)! as HTMLElement;
-    To_Do.parent.insertAdjacentHTML('beforeend', this.renderDesk());
+    this.parent = document.getElementById(`todos-${STATUS[todo.status]}`)! as HTMLElement;
+    this.parent.insertAdjacentHTML('beforeend', this.renderDesk());
+    this.element = this.parent.querySelector(`[data-id="${this.todo.id}"]`)! as HTMLElement;
     this.btnPrev = document.querySelector(`[data-prevId="${this.todo.id}"]`)! as HTMLButtonElement;
     this.btnNext = document.querySelector(`[data-nextId="${this.todo.id}"]`)! as HTMLButtonElement;
     this.configure();
@@ -21,6 +24,15 @@ class To_Do {
     if (this.btnNext) {
       this.btnNext.addEventListener('click', this.changeStatusHandler.bind(this));
     }
+
+    this.element.addEventListener('dragstart', (e) => {
+      e.dataTransfer!.setData('text/plain', this.todo.id);
+      e.dataTransfer!.effectAllowed = 'move';
+    });
+
+    this.element.addEventListener('dragend', (e) => {
+      e.dataTransfer!.clearData();
+    });
   }
 
   changeStatusHandler(e: Event) {
@@ -40,10 +52,10 @@ class To_Do {
 
   renderDesk() {
     return `
-      <div class="todo" id="todo" data-id="${this.todo.id}">
+      <div class="todo" id="todo" data-id="${this.todo.id}" draggable="true">
         <div class="todo__title">
           <h4 class="todo__title-text">${this.todo.title}</h4>
-          <span class="todo__title-created"><b>Created: </b>${this.todo.created.rawDate.toLocaleString()}</span>
+          <span class="todo__title-created"><b>Created: </b>${this.todo.created.localString.toLocaleString()}</span>
           <hr />
         </div>
         <p class="todo__description">${this.todo.description}</p>

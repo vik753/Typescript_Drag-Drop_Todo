@@ -26,7 +26,6 @@ export default class AddForm {
     e.preventDefault();
     const title = AddForm.titleInputEl.value;
     const description = AddForm.descriptionInputEl.value;
-    console.log(title, description);
 
     const isTitleValid = AddForm.validate({ value: title, min: 1, max: 20 });
     const isDescriptionValid = AddForm.validate({ value: description, min: 5, max: 50 });
@@ -38,7 +37,7 @@ export default class AddForm {
     // Create new todos and save
     const newTodo: TODO = {
       id: uuidv4(),
-      created: setCreatedData(new Date()),
+      created: setCreatedData(Date.now()),
       title,
       description,
       status: STATUS.created,
@@ -47,7 +46,6 @@ export default class AddForm {
     state.setTodo(newTodo);
     AddForm.titleInputEl.value = '';
     AddForm.descriptionInputEl.value = '';
-    console.log('State after update: ', state.getTodos());
   }
 
   static validate<T extends { value: string; min?: number; max?: number }>(obj: T): boolean {
